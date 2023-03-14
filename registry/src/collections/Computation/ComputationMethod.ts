@@ -13,18 +13,17 @@ const ComputationMethods: CollectionConfig = {
             type: 'relationship',
             relationTo: "method-categories"
         },
-        {
-            name: "inputs",
-            type: "array",
-            fields: [
-                ...nameDescFields,
-                {
-                    name: "type",
-                    type: "relationship",
-                    relationTo: "types"
-                }
-            ]
-        }
+        // {
+        //     name: "data",
+        //     type: "array",
+        //     fields: [
+        //         {
+        //             name: "data",
+        //             type: "relationship",
+        //             relationTo: "method-data"
+        //         }
+        //     ]
+        // }
     ],
 }
 

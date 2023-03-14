@@ -16,19 +16,23 @@ const FunctionalServices: CollectionConfig = {
         },
         {
             name: "inputs",
-            type: "array",
-            fields: [{
-                name: "methodInput",
-                type: "text"
-            }],
+            // type: "array",
+            // fields: [{
+            //     name: "methodInput",
+            //     type: "text",
+            // }],
+
             // TODO switch to filtered references?
-            // type: "relationship",
-            // relationTo: "methods",
-            // filterOptions: ({ siblingData }) => ({
-            //     forMethod: {
-            //         equals: siblingData["method"]
-            //     }
-            // })
+            type: "relationship",
+            relationTo: "method-data",
+            filterOptions: ({ siblingData }) => {
+                // console.log(obj)
+                return {
+                    method: {
+                        equals: siblingData["method"]
+                    }
+                }
+            }
         }
     ],
 }

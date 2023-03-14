@@ -9,9 +9,14 @@ const DataFormats: CollectionConfig = {
   fields: [
     ...nameDescFields,
     {
+      name: "dataType",
+      type: "relationship",
+      relationTo: "types"
+    },
+    {
       name: "version",
       type: "text"
-    }
+    },
   ],
 }
 

@@ -17,23 +17,6 @@ const DataTypes: CollectionConfig = {
       ],
       hasMany: true
     },
-    {
-      name: "availableFormats",
-      type: "relationship",
-      relationTo: "formats",
-      hasMany: true,
-    }
-    // {
-    //   name: "availableFormats",
-    //   type: "array",
-    //   fields: [
-    //     ...nameDescFields,
-    //     {
-    //       name: "version",
-    //       type: "text"
-    //     }
-    //   ]
-    // }
   ],
 }
 
