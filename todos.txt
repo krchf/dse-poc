@@ -1,13 +1,55 @@
 [x] static constraints
 [x] dynamic constraints
 [x] dynamic resource quantity
-[ ] data service constraints
-[ ] optimization services/targets
+[ ] optimization services/targets -> separate collection?
+[ ] optimization constraints -> constraints?!
+[ ] data service constraints -> refactor from functional services
+[x] "decision alternatives" ==> METHOD!
 [ ] dynamic resource growth
-[ ] "decision alternatives"
 [ ] access
 [x] invocation
 [ ] filtering
 [ ] required fields
 [ ] switch relation from attribute to type
 [ ] unify attributes?
+
+---
+
+Optimization Targets:
+1) Priority
+2) Weighted
+3) 
+
+separate collection?
+
+---
+
+Decision Alternatives:
+
+needed or implied based on computation method?
+
+
+---
+
+OptimizationTarget:
+- Attribute 
+- Goal: Min/Max 
+
+Constraint?
+
+Approach
+    (e.g.: AssetReplacement)
+    => Comp. Method!!
+
+
+---
+
+@Attribute: Goals
+@Service: Attribute + Actual Goal
+@Requirement: Attribute + Actual Goal
+
+@Target: Attribute + Goal
+@Service: Target
+@Requirement: Target
+
+TODO constraints? -> analogously

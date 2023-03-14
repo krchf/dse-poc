@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { baseDataTypeAttribute, nameDescFields } from '../../shared';
+import { baseDataTypeAttribute } from '../../shared';
 
 const QualitativeDataTypeAttributes: CollectionConfig = {
   slug: 'qualitative-attributes',

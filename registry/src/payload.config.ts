@@ -4,8 +4,6 @@ import path from 'path';
 import Users from './collections/Users';
 import DataTypes from './collections/Data/DataTypes';
 import DataFormats from './collections/Data/DataTypeFormats';
-import QuantitativeDataTypeAttributes from './collections/Data/QuantitativeDataTypeAttributes';
-import QualitativeDataTypeAttributes from './collections/Data/QualitativeDataTypeAttributes';
 import ComputationMethods from './collections/Computation/ComputationMethod';
 import MethodCategories from './collections/Computation/ComputationMethodCategory';
 import FunctionalServices from './collections/Services/FunctionalServices';
@@ -13,6 +11,7 @@ import MethodData from './collections/Computation/MethodData';
 import Resources from './collections/Services/Resources';
 import ServiceLevelIndicators from './collections/Services/ServiceLevelIndicators';
 import DataServices from './collections/Services/DataServices';
+import Attributes from './collections/Data/Attributes';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -23,13 +22,15 @@ export default buildConfig({
     Users,
     // Add Collections here
     DataTypes,
-    QuantitativeDataTypeAttributes,
-    QualitativeDataTypeAttributes,
+    // QuantitativeDataTypeAttributes,
+    // QualitativeDataTypeAttributes,
+    Attributes,
     DataFormats,
 
     MethodCategories,
     ComputationMethods,
     MethodData,
+    // Approaches,
 
     Resources,
     ServiceLevelIndicators,

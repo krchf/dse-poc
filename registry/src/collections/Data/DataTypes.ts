@@ -9,15 +9,15 @@ const DataTypes: CollectionConfig = {
   },
   fields: [
     ...nameDescFields,
-    {
-      name: "attributes",
-      type: "relationship",
-      relationTo: [
-        "quantitative-attributes",
-        "qualitative-attributes"
-      ],
-      hasMany: true
-    },
+    // {
+    //   name: "attributes",
+    //   type: "relationship",
+    //   relationTo: [
+    //     "quantitative-attributes",
+    //     "qualitative-attributes"
+    //   ],
+    //   hasMany: true
+    // },
   ],
 }
 

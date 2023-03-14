@@ -47,7 +47,7 @@ const FunctionalServices: CollectionConfig = {
                         {
                             name: "attribute",
                             type: 'relationship',
-                            relationTo: ["quantitative-attributes", "qualitative-attributes"]
+                            relationTo: "attributes", //["quantitative-attributes", "qualitative-attributes"]
                             // TODO filtering
                         },
                         {
