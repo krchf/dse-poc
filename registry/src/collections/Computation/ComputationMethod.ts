@@ -5,6 +5,7 @@ const ComputationMethods: CollectionConfig = {
     slug: 'methods',
     admin: {
         useAsTitle: 'name',
+        group: "Computation Methods"
     },
     fields: [
         ...nameDescFields,
@@ -13,17 +14,6 @@ const ComputationMethods: CollectionConfig = {
             type: 'relationship',
             relationTo: "method-categories"
         },
-        // {
-        //     name: "data",
-        //     type: "array",
-        //     fields: [
-        //         {
-        //             name: "data",
-        //             type: "relationship",
-        //             relationTo: "method-data"
-        //         }
-        //     ]
-        // }
     ],
 }
 

@@ -5,6 +5,7 @@ const DataFormats: CollectionConfig = {
   slug: 'formats',
   admin: {
     useAsTitle: 'name',
+    group: "Data"
   },
   fields: [
     ...nameDescFields,

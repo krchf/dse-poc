@@ -5,6 +5,7 @@ const MethodData: CollectionConfig = {
     slug: 'method-data',
     admin: {
         useAsTitle: 'name',
+        group: "Computation Methods"
     },
     fields: [
         ...nameDescFields,

@@ -5,6 +5,7 @@ const MethodCategories: CollectionConfig = {
     slug: 'method-categories',
     admin: {
         useAsTitle: 'name',
+        group: "Computation Methods"
     },
     fields: [
         ...nameDescFields,

@@ -53,37 +53,57 @@ export const inputAttributeSelection: Field[] = [
     }
 ]
 
-export const valueSpecification: Field[] = [
-    {
-        name: "valueSpecification",
-        type: "radio",
-        options: ["absolute", "reference"]
-    },
-    {
-        name: "value",
-        type: "number",
+export function valueSpecificationFields(canReference: boolean): Field[] {
+    const res = [];
+    if (canReference) {
+
+        res.push(
+            {
+                name: "valueSpecification",
+                type: "radio",
+                options: ["absolute", "reference"]
+            },
+            )
+        }
+            
+    res.push(
+
+        {
+            name: "value",
+            type: "number",
         admin: {
             condition: (data, siblingData) => siblingData["valueSpecification"] == "absolute",
         }
     },
-    {
-        name: "value",
-        type: "group",
-        fields: inputAttributeSelection,
-        admin: {
-            condition: (data, siblingData) => siblingData["valueSpecification"] == "reference"
-        }
-    }
-]
+    )
 
-export const resourceSelection: Field[] = [
-    {
-        name: "resource",
-        type: "relationship",
-        relationTo: "resources"
-    },
-    ...valueSpecification
-]
+    if (canReference) {
+        res.push(
+
+            {
+                name: "value",
+                type: "group",
+                fields: inputAttributeSelection,
+                admin: {
+                    condition: (data, siblingData) => siblingData["valueSpecification"] == "reference"
+                }
+            }
+        )
+    }
+
+    return res;
+}
+
+export function resourceSelectionFields(canReference: boolean): Field[] {
+    return [
+        {
+            name: "resource",
+            type: "relationship",
+            relationTo: "resources"
+        },
+        ...valueSpecificationFields(canReference)
+    ]
+}
 
 export const serviceLevelObjective: Field[] = [
     {

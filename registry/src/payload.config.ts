@@ -12,6 +12,7 @@ import FunctionalServices from './collections/Services/FunctionalServices';
 import MethodData from './collections/Computation/MethodData';
 import Resources from './collections/Services/Resources';
 import ServiceLevelIndicators from './collections/Services/ServiceLevelIndicators';
+import DataServices from './collections/Services/DataServices';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -21,18 +22,19 @@ export default buildConfig({
   collections: [
     Users,
     // Add Collections here
-    DataFormats,
+    DataTypes,
     QuantitativeDataTypeAttributes,
     QualitativeDataTypeAttributes,
-    DataTypes,
+    DataFormats,
 
     MethodCategories,
-    MethodData,
     ComputationMethods,
+    MethodData,
 
     Resources,
     ServiceLevelIndicators,
-    FunctionalServices
+    FunctionalServices,
+    DataServices
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),

@@ -1,10 +1,11 @@
 import { CollectionConfig } from 'payload/types';
-import { nameDescFields, resourceSelection, serviceLevelObjective, serviceLocation, valueSpecification } from '../../shared';
+import { nameDescFields, resourceSelectionFields, serviceLevelObjective, serviceLocation, valueSpecificationFields } from '../../shared';
 
 const FunctionalServices: CollectionConfig = {
     slug: 'functional-services',
     admin: {
         useAsTitle: 'name',
+        group: "Services"
     },
     fields: [
         ...nameDescFields,
@@ -60,31 +61,11 @@ const FunctionalServices: CollectionConfig = {
                                 {
                                     label: ">",
                                     value: "GT"
-                                }
+                                },
+                                // TODO continue
                             ]
                         },
-                        ...valueSpecification
-                        // {
-                        //     name: "valueSpecification",
-                        //     type: "radio",
-                        //     options: ["absolute", "referenced"]
-                        // },
-                        // {
-                        //     name: "value",
-                        //     // TODO differentiate between qualitative and quantitative
-                        //     type: "text",
-                        //     admin: {
-                        //         condition: (data, siblingData) => (siblingData.valueSpecification === "absolute")
-                        //     }
-                        // },
-                        // {
-                        //     name: "value",
-                        //     type: "group",
-                        //     fields: inputAttributeSelection,
-                        //     admin: {
-                        //         condition: (data, siblingData) => (siblingData.valueSpecification === "referenced")
-                        //     }
-                        // }
+                        ...valueSpecificationFields(true)
                     ]
                 }
             ],
@@ -116,7 +97,7 @@ const FunctionalServices: CollectionConfig = {
         {
             name: "resourceConsumption",
             type: "array",
-            fields: resourceSelection
+            fields: resourceSelectionFields(true)
         },
         {
             name: "objectives",

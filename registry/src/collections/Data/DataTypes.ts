@@ -5,6 +5,7 @@ const DataTypes: CollectionConfig = {
   slug: 'types',
   admin: {
     useAsTitle: 'name',
+    group: "Data"
   },
   fields: [
     ...nameDescFields,

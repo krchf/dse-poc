@@ -5,6 +5,7 @@ const QualitativeDataTypeAttributes: CollectionConfig = {
   slug: 'qualitative-attributes',
   admin: {
     useAsTitle: 'name',
+    group: "Data"
   },
   fields: [
     ...baseDataTypeAttribute,

@@ -5,6 +5,7 @@ const Resources: CollectionConfig = {
     slug: 'resources',
     admin: {
         useAsTitle: 'name',
+        group: "Services"
     },
     fields: [
         ...nameDescFields,

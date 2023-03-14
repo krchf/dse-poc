@@ -5,6 +5,7 @@ const ServiceLevelIndicators: CollectionConfig = {
     slug: 'indicators',
     admin: {
         useAsTitle: 'name',
+        group: "Services"
     },
     fields: [
         ...nameDescFields,
