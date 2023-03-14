@@ -10,6 +10,8 @@ import ComputationMethods from './collections/Computation/ComputationMethod';
 import MethodCategories from './collections/Computation/ComputationMethodCategory';
 import FunctionalServices from './collections/Services/FunctionalServices';
 import MethodData from './collections/Computation/MethodData';
+import Resources from './collections/Services/Resources';
+import ServiceLevelIndicators from './collections/Services/ServiceLevelIndicators';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -28,6 +30,8 @@ export default buildConfig({
     MethodData,
     ComputationMethods,
 
+    Resources,
+    ServiceLevelIndicators,
     FunctionalServices
   ],
   typescript: {

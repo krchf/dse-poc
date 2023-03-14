@@ -1,0 +1,11 @@
+[x] static constraints
+[x] dynamic constraints
+[x] dynamic resource quantity
+[ ] dynamic resource growth
+[ ] "decision alternatives"
+[ ] data services
+[ ] access
+[x] invocation
+[ ] filtering
+[ ] switch relation from attribute to type
+[ ] unify attributes?
