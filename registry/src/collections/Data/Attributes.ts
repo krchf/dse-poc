@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { baseDataTypeAttribute, cardinalities, nameDescFields } from '../../shared';
+import { cardinalities, nameDescFields } from '../../shared';
 
 const Attributes: CollectionConfig = {
   slug: 'attributes',
@@ -13,22 +13,32 @@ const Attributes: CollectionConfig = {
       name: "type",
       type: "relationship",
       relationTo: "types",
+      required: true
     },
     {
       name: "kind",
       type: "radio",
-      options: ["quantitative", "qualitative"]
+      options: ["quantitative", "qualitative"],
+      defaultValue: "quantitative",
+      required: true
     },
     {
       name: "values",
       type: "array",
       fields: [{
         name: "option",
-        type: "number",
+        type: "text",
         required: true
       }],
       admin: {
         condition: (data) => data.kind === "qualitative"
+      }
+    },
+    {
+      name: "unit",
+      type: "text",
+      admin: {
+        condition: (data) => data.kind === "quantitative"
       }
     },
     ...cardinalities,

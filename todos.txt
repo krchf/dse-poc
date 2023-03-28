@@ -10,8 +10,8 @@
 [x] invocation
 [ ] filtering
 [ ] required fields
-[ ] switch relation from attribute to type
-[ ] unify attributes?
+[x] switch relation from attribute to type
+[x] unify attributes?
 
 ---
 

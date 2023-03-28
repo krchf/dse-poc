@@ -1,11 +1,12 @@
 import { CollectionConfig } from 'payload/types';
-import { nameDescFields } from '../../shared';
+import { cardinalities, nameDescFields } from '../../shared';
 
 const MethodData: CollectionConfig = {
     slug: 'method-data',
     admin: {
         useAsTitle: 'name',
-        group: "Computation Methods"
+        group: "Computation Methods",
+        listSearchableFields: ["name", "method"]
     },
     fields: [
         ...nameDescFields,
@@ -17,13 +18,15 @@ const MethodData: CollectionConfig = {
         {
             name: "kind",
             type: "radio",
-            options: ["input", "output"]
+            options: ["input", "output"],
+            defaultValue: "input"
         },
         {
             name: "type",
             type: "relationship",
             relationTo: "types"
-        }
+        },
+        ...cardinalities
     ],
 }
 

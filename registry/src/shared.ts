@@ -61,7 +61,8 @@ export function valueSpecificationFields(canReference: boolean): Field[] {
             {
                 name: "valueSpecification",
                 type: "radio",
-                options: ["absolute", "reference"]
+                options: ["absolute", "reference"],
+                defaultValue: "absolute"
             },
             )
         }
