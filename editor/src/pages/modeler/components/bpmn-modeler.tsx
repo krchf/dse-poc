@@ -11,9 +11,14 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
 import 'bpmn-js-properties-panel/dist/assets/element-templates.css'
 
-export default function Modeler() {
+interface ModelerProps {
+  onSave: (xml: string) => unknown
+}
+
+export default function Modeler(props: ModelerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
+  const modelerRef = useRef(null)
 
   useEffect(() => {
     const modeler = new BpmnModeler({
@@ -30,30 +35,39 @@ export default function Modeler() {
       ],
     })
     modeler.createDiagram()
+    modelerRef.current = modeler
 
     return () => {
       modeler.destroy()
     }
   }, [])
 
+  const triggerSave = () => {
+    modelerRef.current.saveXML().then((res) => props.onSave(res.xml))
+    // props.onSave(xml)
+  }
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <>
+      <button onClick={triggerSave}>Save</button>
       <div
-        ref={containerRef}
         style={{
+          display: 'flex',
+          flexDirection: 'row',
           width: '100%',
           height: '100%',
-          borderRight: '0.1em solid lightgrey',
         }}
-      />
-      <div ref={panelRef} style={{ width: '275px', height: '100%' }} />
-    </div>
+      >
+        <div
+          ref={containerRef}
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRight: '0.1em solid lightgrey',
+          }}
+        />
+        <div ref={panelRef} style={{ width: '275px', height: '100%' }} />
+      </div>
+    </>
   )
 }

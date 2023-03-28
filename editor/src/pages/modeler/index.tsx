@@ -7,6 +7,10 @@ export default function Modeler() {
     loading: () => <p>Loading...</p>,
   })
 
+  const saveModel = (xml: string) => {
+    console.log(xml)
+  }
+
   return (
     <>
       <Head>
@@ -15,8 +19,7 @@ export default function Modeler() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ width: '100vw', height: '100vh' }}>
-        {/* <p>Hello World!</p> */}
-        <BpmnModeler></BpmnModeler>
+        <BpmnModeler onSave={saveModel}></BpmnModeler>
       </main>
     </>
   )
