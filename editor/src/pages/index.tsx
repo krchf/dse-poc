@@ -1,15 +1,22 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { useQuery } from 'react-query'
-import { ModelCollection } from './api/types'
+import { Model, ModelCollection, modelRepository } from '../data'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const { isLoading, isError, data, error } = useQuery('models', () =>
-    fetch('/models').then((res) => res.json())
-  )
-  const models: ModelCollection = data || {}
-  const ids = Object.keys(models)
+  // const { isLoading, isError, data, error } = useQuery('models', () =>
+  //   fetch('/models').then((res) => res.json())
+  // )
+  // const models: ModelCollection = data || {}
+  // const ids = Object.keys(models)
+
+  const [models, setModels] = useState<Model[]>([])
+
+  useEffect(() => {
+    setModels(modelRepository.readAll())
+  }, [])
 
   return (
     <>
@@ -21,12 +28,12 @@ export default function Home() {
       <main>
         <h1>Models</h1>
         <div>
-          {ids.length === 0 ? (
+          {models.length === 0 ? (
             '(none)'
           ) : (
             <ul>
-              {ids.map((id) => (
-                <li key={id}>{id}</li>
+              {models.map((model) => (
+                <li key={model.name}>{model.name}</li>
               ))}
             </ul>
           )}

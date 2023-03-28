@@ -12,39 +12,47 @@ import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
 import 'bpmn-js-properties-panel/dist/assets/element-templates.css'
 
 interface ModelerProps {
+  xml: string
   onSave: (xml: string) => unknown
 }
 
 export default function Modeler(props: ModelerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
-  const modelerRef = useRef(null)
+  const modelerRef = useRef<any>(null)
 
   useEffect(() => {
-    const modeler = new BpmnModeler({
-      container: containerRef.current,
-      // keyboard: {
-      //   bindTo: window,
-      // },
-      propertiesPanel: {
-        parent: panelRef.current,
-      },
-      additionalModules: [
-        BpmnPropertiesPanelModule,
-        BpmnPropertiesProviderModule,
-      ],
-    })
-    modeler.createDiagram()
-    modelerRef.current = modeler
+    if (modelerRef.current === null) {
+      modelerRef.current = new BpmnModeler({
+        container: containerRef.current,
+        // keyboard: {
+        //   bindTo: window,
+        // },
+        propertiesPanel: {
+          parent: panelRef.current,
+        },
+        additionalModules: [
+          BpmnPropertiesPanelModule,
+          BpmnPropertiesProviderModule,
+        ],
+      })
+    }
+
+    const modeler = modelerRef.current
+
+    if (props.xml) {
+      modeler.importXML(props.xml)
+    } else {
+      modeler.createDiagram()
+    }
 
     return () => {
-      modeler.destroy()
+      // modeler.destroy()
     }
   }, [])
 
   const triggerSave = () => {
     modelerRef.current.saveXML().then((res) => props.onSave(res.xml))
-    // props.onSave(xml)
   }
 
   return (
