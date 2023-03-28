@@ -14,8 +14,8 @@ export default function Modeler() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <p>Hello World!</p>
+      <main style={{ width: '100vw', height: '100vh' }}>
+        {/* <p>Hello World!</p> */}
         <BpmnModeler></BpmnModeler>
       </main>
     </>
