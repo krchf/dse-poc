@@ -3,6 +3,7 @@ import Head from 'next/head'
 
 export default function Modeler() {
   const BpmnModeler = dynamic(() => import('./components/bpmn-modeler'), {
+    ssr: false,
     loading: () => <p>Loading...</p>,
   })
 
