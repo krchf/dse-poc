@@ -1,6 +1,7 @@
 import { Model, modelRepository } from '@/data'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 const BpmnModeler = dynamic(() => import('./components/bpmn-modeler'), {
@@ -10,21 +11,24 @@ const BpmnModeler = dynamic(() => import('./components/bpmn-modeler'), {
 
 export default function Modeler() {
   const [model, setModel] = useState(emptyModel)
+  const router = useRouter()
+  const { id } = router.query
 
   useEffect(() => {
     console.log('useEffect')
-    const storedModel = modelRepository.read('test')
+    const storedModel = modelRepository.read(id as string)
     if (storedModel) {
       setModel(storedModel)
     }
-  }, [])
+  }, [id])
 
   const saveModel = (xml: string) => {
     const model: Model = {
-      name: 'test',
+      id: id as string,
+      name: id as string,
       xml,
     }
-    modelRepository.write('test', model)
+    modelRepository.write(id as string, model)
     setModel(model)
   }
 
@@ -43,6 +47,7 @@ export default function Modeler() {
 }
 
 const emptyModel: Model = {
+  id: 'model-test',
   name: 'test',
   xml: '<?xml version="1.0" encoding="UTF-8"?>\n<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn"><bpmn:process id="Process_1" isExecutable="false"><bpmn:startEvent id="StartEvent_1" /></bpmn:process><bpmndi:BPMNDiagram id="BPMNDiagram_1"><bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1"><bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1"><dc:Bounds x="173" y="102" width="36" height="36" /></bpmndi:BPMNShape></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn:definitions>',
 }

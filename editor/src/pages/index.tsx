@@ -33,7 +33,9 @@ export default function Home() {
           ) : (
             <ul>
               {models.map((model) => (
-                <li key={model.name}>{model.name}</li>
+                <li key={model.name}>
+                  <Link href={`/modeler/${model.id}`}>{model.name}</Link>
+                </li>
               ))}
             </ul>
           )}

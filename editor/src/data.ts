@@ -1,5 +1,6 @@
 export interface Model {
-    name: string;
+    id: string;
+    name?: string;
     xml: string;
 }
 
