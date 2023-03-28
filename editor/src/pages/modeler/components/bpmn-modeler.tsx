@@ -55,9 +55,14 @@ export default function Modeler(props: ModelerProps) {
     modelerRef.current.saveXML().then((res) => props.onSave(res.xml))
   }
 
+  const undo = () => {
+    modelerRef.current.get('commandStack').undo()
+  }
+
   return (
     <>
       <button onClick={triggerSave}>Save</button>
+      <button onClick={undo}>Undo</button>
       <div
         style={{
           display: 'flex',
