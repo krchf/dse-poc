@@ -11,8 +11,8 @@ import {
 } from 'bpmn-js-properties-panel';
 import "bpmn-js-properties-panel/dist/assets/properties-panel.css"
 
-
-console.log("Hello World!")
+import magicPropertiesProviderModule from './provider/magic';
+import magicModdleDescriptor from './descriptors/magic.json';
 
 const modeler = new BpmnJS({
   container: "#canvas",
@@ -21,7 +21,16 @@ const modeler = new BpmnJS({
   },
   additionalModules: [
     BpmnPropertiesPanelModule,
-    BpmnPropertiesProviderModule
-  ]
+    BpmnPropertiesProviderModule,
+    magicPropertiesProviderModule
+  ],
+  moddleExtensions: {
+    magic: magicModdleDescriptor
+  }
 })
 modeler.createDiagram()
+
+const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
+saveBtn.onclick = () => {
+  modeler.saveXML({}).then(res => console.log(res.xml));
+}
