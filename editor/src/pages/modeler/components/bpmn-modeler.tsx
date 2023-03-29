@@ -11,6 +11,9 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
 import 'bpmn-js-properties-panel/dist/assets/element-templates.css'
 
+import magicPropertiesProviderModule from './provider/magic'
+import magicModdleDescriptor from './magic-properties/magic.json'
+
 interface ModelerProps {
   xml: string
   onSave: (xml: string) => unknown
@@ -21,20 +24,34 @@ export default function Modeler(props: ModelerProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const modelerRef = useRef<any>(null)
 
+  console.log(
+    'magicPropertiesProviderModule',
+    typeof magicPropertiesProviderModule,
+    magicPropertiesProviderModule.getGroups,
+    magicPropertiesProviderModule
+  )
+
   useEffect(() => {
     if (modelerRef.current === null) {
+      console.log('Panel ID', panelRef.current?.id)
+
       modelerRef.current = new BpmnModeler({
         container: containerRef.current,
         // keyboard: {
         //   bindTo: window,
         // },
         propertiesPanel: {
-          parent: panelRef.current,
+          // parent: panelRef.current?.id,
+          parent: '#panel',
         },
         additionalModules: [
           BpmnPropertiesPanelModule,
           BpmnPropertiesProviderModule,
+          magicPropertiesProviderModule,
         ],
+        // moddleExtensions: {
+        //   magic: magicModdleDescriptor,
+        // },
       })
     }
 
@@ -79,7 +96,11 @@ export default function Modeler(props: ModelerProps) {
             borderRight: '0.1em solid lightgrey',
           }}
         />
-        <div ref={panelRef} style={{ width: '275px', height: '100%' }} />
+        <div
+          id="panel"
+          ref={panelRef}
+          style={{ width: '275px', height: '100%' }}
+        />
       </div>
     </>
   )
