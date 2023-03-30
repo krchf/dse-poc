@@ -9,11 +9,12 @@
   "types": [
     {
       "name": "BewitchedStartEvent",
-      "extends": ["bpmn:StartEvent"],
+      "superClass": ["Element"],
       "properties": [
         {
           "name": "spell",
-          "type": "String"
+          "type": "String",
+          "isBody": true
         }
       ]
     }
