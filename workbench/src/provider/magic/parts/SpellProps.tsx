@@ -58,9 +58,9 @@ function Spell(props) {
 
     if (!bewitched) {
       bewitched = moddle.create("magic:BewitchedStartEvent");
-      bewitched.spell = value;
-      extensionElements.get("values").push(bewitched);
     }
+    bewitched.spell = value;
+    extensionElements.get("values").push(bewitched);
 
     return modeling.updateProperties(element, {
       extensionElements,
