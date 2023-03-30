@@ -13,6 +13,7 @@ body {
 
 #canvas {
   border-right: 1px lightgray solid;
+  flex-grow: 1;
 }
 
 #properties {
@@ -22,6 +23,6 @@ body {
 #saveBtn {
   position: fixed;
   bottom: 1em;
-  left: 1em;
+  left: 1.5em;
   /* bottom: 1em; */
 }
