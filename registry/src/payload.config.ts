@@ -12,6 +12,7 @@ import Resources from './collections/Services/Resources';
 import ServiceLevelIndicators from './collections/Services/ServiceLevelIndicators';
 import DataServices from './collections/Services/DataServices';
 import Attributes from './collections/Data/Attributes';
+import Models from './collections/Models';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -35,7 +36,9 @@ export default buildConfig({
     Resources,
     ServiceLevelIndicators,
     FunctionalServices,
-    DataServices
+    DataServices,
+
+    Models
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
