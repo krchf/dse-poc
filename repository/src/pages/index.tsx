@@ -5,18 +5,20 @@ import { Model, ModelCollection, modelRepository } from '../data'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
+// TODO externalize
+const MODELER_URL = 'http://localhost:5173/?id='
+
 export default function Home() {
-  // const { isLoading, isError, data, error } = useQuery('models', () =>
-  //   fetch('/models').then((res) => res.json())
-  // )
-  // const models: ModelCollection = data || {}
-  // const ids = Object.keys(models)
+  const {
+    isLoading,
+    isError,
+    data: models,
+    error,
+  } = useQuery<ModelCollection>('models', () =>
+    fetch('/api/models').then((res) => res.json())
+  )
 
-  const [models, setModels] = useState<Model[]>([])
-
-  useEffect(() => {
-    setModels(modelRepository.readAll())
-  }, [])
+  const [newId, setNewId] = useState('ID')
 
   return (
     <>
@@ -27,24 +29,34 @@ export default function Home() {
       </Head>
       <main>
         <h1>Models</h1>
-        <div>
-          {models.length === 0 ? (
-            '(none)'
-          ) : (
-            <ul>
-              {models.map((model) => (
-                <li key={model.name}>
-                  <Link href={`/modeler/${model.id}`}>{model.name}</Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <br />
-        <Link href="/modeler">
-          <button>New</button>
-        </Link>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <div>
+              <ul>
+                {Object.entries(models as ModelCollection).map(
+                  ([id, model]) => (
+                    <li key={model.name}>
+                      <a href={`${MODELER_URL}${id}`} target="_blank">
+                        {model.name}
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+            <br />
+            <input
+              type="text"
+              placeholder="ID"
+              onChange={(e) => setNewId(e.target.value)}
+            />
+            <a href={`${MODELER_URL}${newId}`} target="_blank">
+              <button>New</button>
+            </a>
+          </>
+        )}
       </main>
     </>
   )

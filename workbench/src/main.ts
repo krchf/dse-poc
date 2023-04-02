@@ -14,6 +14,8 @@ import "bpmn-js-properties-panel/dist/assets/properties-panel.css"
 import magicPropertiesProviderModule from './provider/magic';
 import magicModdleDescriptor from './descriptors/magic.json';
 
+import { Model } from "../../shared/types/models"
+
 const modeler = new BpmnJS({
   container: "#canvas",
   propertiesPanel: {
@@ -30,7 +32,26 @@ const modeler = new BpmnJS({
 })
 modeler.createDiagram()
 
+const API_URL = "http://localhost:3000/api/models/"
+const id = new URLSearchParams(window.location.search).get("id")
+
 const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
-saveBtn.onclick = () => {
-  modeler.saveXML({}).then(res => console.log(res.xml));
+saveBtn.onclick = async () => {
+  const xml = (await
+    modeler.saveXML({})).xml
+  console.log(xml)
+
+  const model: Model = {
+    name: "FIXED",
+    xml: xml as string
+  }
+
+
+  fetch(API_URL + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(model)
+  }).then(console.log).catch(console.error)
 }

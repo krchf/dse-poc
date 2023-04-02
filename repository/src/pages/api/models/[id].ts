@@ -1,27 +1,19 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-
 import { Client } from "minio"
 
-import { Model, ModelCollection } from "../../../../../shared/types/models"
+import { Model } from "../../../../../shared/types/models"
+import { BUCKET_NAME, createMinioClient } from './minio';
+import { handleCors } from '../cors';
 
-const BUCKET_NAME = "models";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Model>
 ) {
+  await handleCors(req, res);
+
   try {
-
-    // TODO externalize minio config
-    const minio = new Client({
-      endPoint: "localhost",
-      port: 9000,
-      useSSL: false,
-      accessKey: "minioadmin",
-      secretKey: "minioadmin"
-    });
-
+    const minio = createMinioClient()
     const { id } = req.query
 
     switch (req.method) {
@@ -36,10 +28,13 @@ export default async function handler(
         res.end()
         break
       }
+      default: {
+        res.status(400).end()
+      }
     }
   } catch (error) {
     console.error(error);
-    res.status(501).send(error as any)
+    res.status(500).send(error as any)
   }
 }
 
@@ -60,7 +55,7 @@ async function write(minio: Client, id: string, model: Model): Promise<void> {
 
 async function read(minio: Client, id: string) {
   // TODO parallelize calls
-  const metadata = await minio.statObject(BUCKET_NAME, id);
+  const metadata = await minio.statObject(BUCKET_NAME, id + ".xml");
   const stream = await minio.getObject(BUCKET_NAME, id + ".xml")
 
   // transform stream to string

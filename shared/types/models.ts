@@ -4,4 +4,6 @@ export interface Model {
     description?: string;
 }
 
-export type ModelCollection = Model[];
+export type ModelCollection = {
+    [id: string]: Model
+};
