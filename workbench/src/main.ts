@@ -23,6 +23,7 @@ const id = new URLSearchParams(window.location.search).get("id")
 let model: Model;
 let modeler = new BpmnJS({
   container: "#canvas",
+  // https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903
   propertiesPanel: {
     parent: '#properties'
   },
@@ -48,8 +49,7 @@ fetch(API_URL + id).then(res => res.json()).then((modelResponse) => {
   }
 })
 
-const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
-saveBtn.onclick = async () => {
+async function saveModel() {
   model.xml = (await
     modeler.saveXML({})).xml as string
 
@@ -63,3 +63,29 @@ saveBtn.onclick = async () => {
     body: JSON.stringify(model)
   }).catch(console.error)
 }
+
+function undo() {
+  // TODO fix type (related to https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903 ?)
+  (modeler as any).get('commandStack').undo();
+}
+
+function redo() {
+  // TODO fix type (related to https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903 ?)
+  (modeler as any).get('commandStack').redo();
+}
+
+const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
+saveBtn.onclick = saveModel
+
+function addShortcut(key: string, fn: () => any) {
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === key.toLowerCase()) {
+      e.preventDefault();
+      fn();
+    }
+  })
+}
+
+addShortcut("s", saveModel)
+addShortcut("z", undo)
+addShortcut("y", redo)
