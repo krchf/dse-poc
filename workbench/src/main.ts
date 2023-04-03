@@ -16,7 +16,12 @@ import magicModdleDescriptor from './descriptors/magic.json';
 
 import { Model } from "../../shared/types/models"
 
-const modeler = new BpmnJS({
+
+const API_URL = "http://localhost:3000/api/models/"
+const id = new URLSearchParams(window.location.search).get("id")
+
+let model: Model;
+let modeler = new BpmnJS({
   container: "#canvas",
   propertiesPanel: {
     parent: '#properties'
@@ -29,23 +34,26 @@ const modeler = new BpmnJS({
   moddleExtensions: {
     magic: magicModdleDescriptor
   }
-})
-modeler.createDiagram()
+});
 
-const API_URL = "http://localhost:3000/api/models/"
-const id = new URLSearchParams(window.location.search).get("id")
+// load model
+fetch(API_URL + id).then(res => res.json()).then((modelResponse) => {
+  model = modelResponse
+  console.log("loaded model:", model)
+
+  if (model.xml) {
+    modeler.importXML(model.xml)
+  } else {
+    modeler.createDiagram()
+  }
+})
 
 const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
 saveBtn.onclick = async () => {
-  const xml = (await
-    modeler.saveXML({})).xml
-  console.log(xml)
+  model.xml = (await
+    modeler.saveXML({})).xml as string
 
-  const model: Model = {
-    name: "FIXED",
-    xml: xml as string
-  }
-
+  console.log("saving model:", model)
 
   fetch(API_URL + id, {
     method: "PUT",
@@ -53,5 +61,5 @@ saveBtn.onclick = async () => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(model)
-  }).then(console.log).catch(console.error)
+  }).catch(console.error)
 }
