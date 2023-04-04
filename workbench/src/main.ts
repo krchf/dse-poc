@@ -11,7 +11,8 @@ import {
 } from 'bpmn-js-properties-panel';
 import "bpmn-js-properties-panel/dist/assets/properties-panel.css"
 
-import magicPropertiesProviderModule from './provider/magic';
+// import magicPropertiesProviderModule from './provider/magic';
+import magicPropertiesProviderModule from './modules/magic';
 import magicModdleDescriptor from './descriptors/magic.json';
 
 import { Model } from "../../shared/types/models"
