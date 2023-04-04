@@ -25,7 +25,19 @@ export function addGroup(element: Element, group: PropertiesGroup) {
 
 export interface PropertyInput<T = string> {
   id: string,
-  getValue: (element: Element) => T
-  setValue: (element: Element, value: T) => void
   type: "text";
+  label: string,
+  description: string,
+  getValue: (element: Element) => T
+  setValue: (element: Element, moddle, modeling, value: T) => void
+}
+
+export function getExtensionElement(element: any, type: string) {
+  if (!element.extensionElements) {
+    return;
+  }
+
+  return element.extensionElements.values.filter((extensionElement: any) => {
+    return extensionElement.$instanceOf(type);
+  })[0];
 }
