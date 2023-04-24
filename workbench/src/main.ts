@@ -11,13 +11,14 @@ import {
 } from "bpmn-js-properties-panel"
 import "bpmn-js-properties-panel/dist/assets/properties-panel.css"
 
-// import magicPropertiesProviderModule from './provider/magic';
-import magicPropertiesProviderModule from "./modules/magic"
-import magicModdleDescriptor from "./descriptors/magic.json"
 import { supabase } from "./supabase-client"
 
-// TODO hardcoded: API Url
-const API_URL = "http://localhost:5000/api/models/"
+import ServicePropertyProviderModule from "./properties/service"
+import InputPropertyProviderModule from "./properties/input"
+import { generateDescriptors } from "./properties/utils"
+import { ServiceProperty } from "./properties/service/ServiceProperty"
+import { InputProperty } from "./properties/input/InputProperty"
+
 const id = new URLSearchParams(window.location.search).get("id")
 
 let modeler = new BpmnJS({
@@ -29,10 +30,11 @@ let modeler = new BpmnJS({
   additionalModules: [
     BpmnPropertiesPanelModule,
     BpmnPropertiesProviderModule,
-    magicPropertiesProviderModule,
+    ServicePropertyProviderModule,
+    InputPropertyProviderModule,
   ],
   moddleExtensions: {
-    magic: magicModdleDescriptor,
+    dse: generateDescriptors([ServiceProperty, InputProperty]),
   },
 })
 

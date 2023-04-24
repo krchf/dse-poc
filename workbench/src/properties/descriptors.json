@@ -1,18 +1,18 @@
 {
-  "name": "Magic",
-  "prefix": "magic",
-  "uri": "http://magic",
+  "name": "Decision Support Ecosystem",
+  "prefix": "dse",
+  "uri": "http://dse.krchf.de",
   "xml": {
     "tagAlias": "lowerCase"
   },
   "associations": [],
   "types": [
     {
-      "name": "BewitchedStartEvent",
+      "name": "Service",
       "superClass": ["Element"],
       "properties": [
         {
-          "name": "spell",
+          "name": "service",
           "type": "String",
           "isBody": true
         }

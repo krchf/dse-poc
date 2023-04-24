@@ -1,7 +1,11 @@
 import { is } from "bpmn-js/lib/util/ModelUtil"
 import { createEntry } from "./utils/entries"
 
-export type ElementType = "bpmn:StartEvent" | "..."
+export enum ElementType {
+  StartEvent = "bpmn:StartEvent",
+  Task = "bpmn:Task",
+  DataInputAssociation = "bpmn:DataInputAssociation",
+}
 
 export interface Property {
   /** Name of the type in the associated descriptor JSON. */
@@ -19,7 +23,7 @@ export interface Property {
 export type Element = any
 export type TranslateFn = (text: string) => string
 
-export function addGroup(element: Element, prop: Property) {
+export function addProperty(element: Element, prop: Property) {
   return (groups: unknown[]) => {
     let isApplicable = false
 
@@ -49,4 +53,27 @@ export function getExtensionElement(element: Element, type: string) {
   return element.extensionElements.values.filter((extensionElement: any) => {
     return extensionElement.$instanceOf(type)
   })[0]
+}
+
+export function generateDescriptors(properties: Property[]) {
+  return {
+    name: "Decision Support Ecosystem",
+    prefix: "dse",
+    uri: "http://dse.krchf.de",
+    xml: {
+      tagAlias: "lowerCase",
+    },
+    associations: [],
+    types: properties.map((p) => ({
+      name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
+      superClass: ["Element"],
+      properties: [
+        {
+          name: p.name,
+          type: "String",
+          isBody: true,
+        },
+      ],
+    })),
+  }
 }
