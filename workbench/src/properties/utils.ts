@@ -65,7 +65,7 @@ export function generateDescriptors(properties: Property[]) {
     },
     associations: [],
     types: properties.map((p) => ({
-      name: p.name.charAt(0).toUpperCase() + p.name.slice(1),
+      name: p.type.slice(4),
       superClass: ["Element"],
       properties: [
         {

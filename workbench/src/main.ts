@@ -21,6 +21,8 @@ import { InputProperty } from "./properties/input/InputProperty"
 
 const id = new URLSearchParams(window.location.search).get("id")
 
+const descriptors = generateDescriptors([ServiceProperty, InputProperty])
+
 let modeler = new BpmnJS({
   container: "#canvas",
   // https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903
@@ -34,7 +36,7 @@ let modeler = new BpmnJS({
     InputPropertyProviderModule,
   ],
   moddleExtensions: {
-    dse: generateDescriptors([ServiceProperty, InputProperty]),
+    dse: descriptors,
   },
 })
 

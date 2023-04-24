@@ -1,7 +1,7 @@
 import { ElementType, Property } from "../utils"
 
 export const InputProperty: Property = {
-  type: "dse:input",
+  type: "dse:Input",
   name: "input",
   label: "Input",
   description: "Input method data of service",
