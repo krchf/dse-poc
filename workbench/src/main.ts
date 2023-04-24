@@ -1,4 +1,4 @@
-import './style.css'
+import "./style.css"
 
 import BpmnJS from "bpmn-js/lib/Modeler"
 import "bpmn-js/dist/assets/bpmn-js.css"
@@ -7,82 +7,96 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css"
 
 import {
   BpmnPropertiesPanelModule,
-  BpmnPropertiesProviderModule
-} from 'bpmn-js-properties-panel';
+  BpmnPropertiesProviderModule,
+} from "bpmn-js-properties-panel"
 import "bpmn-js-properties-panel/dist/assets/properties-panel.css"
 
 // import magicPropertiesProviderModule from './provider/magic';
-import magicPropertiesProviderModule from './modules/magic';
-import magicModdleDescriptor from './descriptors/magic.json';
+import magicPropertiesProviderModule from "./modules/magic"
+import magicModdleDescriptor from "./descriptors/magic.json"
+import { supabase } from "./supabase-client"
 
-import { Model } from "../../shared/types/models"
-
-
-const API_URL = "http://localhost:3000/api/models/"
+// TODO hardcoded: API Url
+const API_URL = "http://localhost:5000/api/models/"
 const id = new URLSearchParams(window.location.search).get("id")
 
-let model: Model;
 let modeler = new BpmnJS({
   container: "#canvas",
   // https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903
   propertiesPanel: {
-    parent: '#properties'
+    parent: "#properties",
   },
   additionalModules: [
     BpmnPropertiesPanelModule,
     BpmnPropertiesProviderModule,
-    magicPropertiesProviderModule
+    magicPropertiesProviderModule,
   ],
   moddleExtensions: {
-    magic: magicModdleDescriptor
-  }
-});
-
-// load model
-fetch(API_URL + id).then(res => res.json()).then((modelResponse) => {
-  model = modelResponse
-  console.log("loaded model:", model)
-
-  if (model.xml) {
-    modeler.importXML(model.xml)
-  } else {
-    modeler.createDiagram()
-  }
+    magic: magicModdleDescriptor,
+  },
 })
 
+// load model
+const { data, error } = await supabase.storage
+  .from("models")
+  .download(`${id}.xml`)
+
+if (error) {
+  console.error(error)
+}
+
+if (data) {
+  modeler.importXML(await data.text())
+} else {
+  modeler.createDiagram()
+}
+
 async function saveModel() {
-  model.xml = (await
-    modeler.saveXML({})).xml as string
+  const xml = (await modeler.saveXML({})).xml as string
+  const svg = (await modeler.saveSVG()).svg
 
-  console.log("saving model:", model)
+  const { data: xmlData, error: xmlError } = await supabase.storage
+    .from("models")
+    .upload(`${id}.xml`, xml, {
+      contentType: "application/xml",
+      upsert: true,
+    })
 
-  fetch(API_URL + id, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(model)
-  }).catch(console.error)
+  if (xmlError) {
+    console.error(xmlError)
+  }
+
+  const { data: svgData, error: svgError } = await supabase.storage
+    .from("models")
+    .upload(`${id}.svg`, svg, { contentType: "image/svg+xml", upsert: true })
+
+  if (svgError) {
+    console.error(svgError)
+  }
+
+  if (!xmlError && !svgError) {
+    alert("Save successful!")
+  }
 }
 
 function undo() {
   // TODO fix type (related to https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903 ?)
-  (modeler as any).get('commandStack').undo();
+  ;(modeler as any).get("commandStack").undo()
 }
 
 function redo() {
   // TODO fix type (related to https://github.com/bpmn-io/bpmn-js-properties-panel/issues/903 ?)
-  (modeler as any).get('commandStack').redo();
+  ;(modeler as any).get("commandStack").redo()
 }
 
-const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement;
+const saveBtn = document.getElementById("saveBtn") as HTMLButtonElement
 saveBtn.onclick = saveModel
 
 function addShortcut(key: string, fn: () => any) {
-  document.addEventListener('keydown', e => {
+  document.addEventListener("keydown", (e) => {
     if (e.ctrlKey && e.key === key.toLowerCase()) {
-      e.preventDefault();
-      fn();
+      e.preventDefault()
+      fn()
     }
   })
 }
