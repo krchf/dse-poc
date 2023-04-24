@@ -22,6 +22,7 @@ export default function Composition() {
   } = useQuery<Composition>({
     queryKey: ["composition"],
     queryFn: () => fetch(`/api/compositions/${id}`).then((res) => res.json()),
+    enabled: Boolean(id),
   })
 
   if (isLoading) {

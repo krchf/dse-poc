@@ -14,7 +14,10 @@ export default async function handler(
 
   switch (req.method) {
     case "GET":
-      res.status(200).send(await readSingle(id as string))
+      res
+        // .setHeader("Content-Type", "application/json")
+        .status(200)
+        .send(await readSingle(id as string))
       break
     case "PUT":
       res.status(200).send(await update(req.body))
