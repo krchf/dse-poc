@@ -1,7 +1,7 @@
 import { is } from "bpmn-js/lib/util/ModelUtil"
 import { createEntry } from "./utils/entries"
 
-export type ElementType = "bpmn:StartEvent" | "bpmn:Activity" | "..."
+export type ElementType = "bpmn:StartEvent" | "..."
 
 export interface Property {
   /** Name of the type in the associated descriptor JSON. */
@@ -16,9 +16,7 @@ export interface Property {
   applicableElements: ElementType[]
 }
 
-// ------------------------
-
-export type Element = unknown
+export type Element = any
 export type TranslateFn = (text: string) => string
 
 export function addGroup(element: Element, prop: Property) {
@@ -43,7 +41,7 @@ export function addGroup(element: Element, prop: Property) {
   }
 }
 
-export function getExtensionElement(element: any, type: string) {
+export function getExtensionElement(element: Element, type: string) {
   if (!element.extensionElements) {
     return
   }

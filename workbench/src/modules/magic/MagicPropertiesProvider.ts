@@ -2,7 +2,7 @@ import { addGroup as addProperty } from "../utils"
 
 const LOW_PRIORITY = 500
 
-export default function MagicPropertiesProvider(propertiesPanel, translate) {
+export default function MagicPropertiesProvider(propertiesPanel: any) {
   this.getGroups = (element: unknown) => {
     return addProperty(element, {
       type: "magic:BewitchedStartEvent",
