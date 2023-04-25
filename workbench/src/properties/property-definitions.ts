@@ -4,22 +4,22 @@ export const ServiceProperty: Property = {
   type: "dse:Service",
   name: "service",
   label: "Service",
-  description: "(Functional) Decision Support Service to support the task",
-  applicableElements: [ElementType.Task],
+  description: "Decision Support Service",
+  applicableElements: [ElementType.Task, ElementType.DataObject],
 }
 
-export const InputProperty: Property = {
-  type: "dse:Input",
-  name: "input",
-  label: "Input",
-  description: "Input method data of service",
-  applicableElements: [ElementType.DataInputAssociation],
-}
-
-export const OutputProperty: Property = {
-  type: "dse:Output",
-  name: "output",
-  label: "Output",
+export const SourceProperty: Property = {
+  type: "dse:Source",
+  name: "source",
+  label: "Source",
   description: "Output method data of service",
   applicableElements: [ElementType.DataOutputAssociation],
+}
+
+export const TargetProperty: Property = {
+  type: "dse:Target",
+  name: "target",
+  label: "Target",
+  description: "Input method data of service",
+  applicableElements: [ElementType.DataInputAssociation],
 }

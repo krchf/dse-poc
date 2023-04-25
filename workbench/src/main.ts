@@ -14,21 +14,21 @@ import "bpmn-js-properties-panel/dist/assets/properties-panel.css"
 import { supabase } from "./supabase-client"
 
 import ServicePropertyProviderModule from "./properties/service"
-import InputPropertyProviderModule from "./properties/input"
-import OutputPropertyProviderModule from "./properties/output"
+import InputPropertyProviderModule from "./properties/target"
+import SourcePropertyProviderModule from "./properties/source"
 import { generateDescriptors } from "./properties/utils"
 import {
   ServiceProperty,
-  InputProperty,
-  OutputProperty,
+  TargetProperty,
+  SourceProperty,
 } from "./properties/property-definitions"
 
 const id = new URLSearchParams(window.location.search).get("id")
 
 const moddleDescriptors = generateDescriptors([
   ServiceProperty,
-  InputProperty,
-  OutputProperty,
+  TargetProperty,
+  SourceProperty,
 ])
 
 let modeler = new BpmnJS({
@@ -42,7 +42,7 @@ let modeler = new BpmnJS({
     BpmnPropertiesProviderModule,
     ServicePropertyProviderModule,
     InputPropertyProviderModule,
-    OutputPropertyProviderModule,
+    SourcePropertyProviderModule,
   ],
   moddleExtensions: {
     dse: moddleDescriptors,
