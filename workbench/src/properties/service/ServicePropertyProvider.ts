@@ -1,5 +1,5 @@
 import { addProperty } from "../utils"
-import { ServiceProperty } from "./ServiceProperty"
+import { ServiceProperty } from "../property-definitions"
 
 const LOW_PRIORITY = 500
 

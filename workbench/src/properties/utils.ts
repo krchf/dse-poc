@@ -5,6 +5,7 @@ export enum ElementType {
   StartEvent = "bpmn:StartEvent",
   Task = "bpmn:Task",
   DataInputAssociation = "bpmn:DataInputAssociation",
+  DataOutputAssociation = "bpmn:DataOutputAssociation",
 }
 
 export interface Property {

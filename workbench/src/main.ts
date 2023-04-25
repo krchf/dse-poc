@@ -15,13 +15,21 @@ import { supabase } from "./supabase-client"
 
 import ServicePropertyProviderModule from "./properties/service"
 import InputPropertyProviderModule from "./properties/input"
+import OutputPropertyProviderModule from "./properties/output"
 import { generateDescriptors } from "./properties/utils"
-import { ServiceProperty } from "./properties/service/ServiceProperty"
-import { InputProperty } from "./properties/input/InputProperty"
+import {
+  ServiceProperty,
+  InputProperty,
+  OutputProperty,
+} from "./properties/property-definitions"
 
 const id = new URLSearchParams(window.location.search).get("id")
 
-const descriptors = generateDescriptors([ServiceProperty, InputProperty])
+const moddleDescriptors = generateDescriptors([
+  ServiceProperty,
+  InputProperty,
+  OutputProperty,
+])
 
 let modeler = new BpmnJS({
   container: "#canvas",
@@ -34,9 +42,10 @@ let modeler = new BpmnJS({
     BpmnPropertiesProviderModule,
     ServicePropertyProviderModule,
     InputPropertyProviderModule,
+    OutputPropertyProviderModule,
   ],
   moddleExtensions: {
-    dse: descriptors,
+    dse: moddleDescriptors,
   },
 })
 

@@ -1,5 +1,5 @@
 import { addProperty } from "../utils"
-import { InputProperty } from "./InputProperty"
+import { InputProperty } from "../property-definitions"
 
 const LOW_PRIORITY = 500
 
