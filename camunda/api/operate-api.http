@@ -1,0 +1,27 @@
+@processInstance = 2251799813691698
+@variableInstance = 2251799813691708
+@cookie = OPERATE-SESSION=C9A662BF11AD5B501EC3A47F4BB41EC8; Path=/; HttpOnly; SameSite=Lax
+
+POST http://localhost:8081/api/login?username=demo&password=demo
+
+###
+
+GET http://localhost:8081/v1/process-instances/{{processInstance}}
+Cookie: {{cookie}}
+
+###
+
+POST http://localhost:8081/v1/variables/search
+Content-Type: application/json
+Cookie: {{cookie}}
+
+{
+  "filter": {
+    "processInstanceKey": {{processInstance}}
+  }
+}
+
+###
+
+GET http://localhost:8081/v1/variables/{{variableInstance}}
+Cookie: {{cookie}}
