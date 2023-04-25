@@ -1,0 +1,10 @@
+{
+  "firstInput": {
+    "@url": "http://...",
+    "someMetaData": 1
+  },
+  "secondInput": {
+    "@url": "http://...",
+    "anotherMetaData": "abc"
+  }
+}
