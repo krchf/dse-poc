@@ -23,3 +23,11 @@ export const TargetProperty: Property = {
   description: "Input method data of service",
   applicableElements: [ElementType.DataInputAssociation],
 }
+
+export const ConditionProperty: Property = {
+  type: "dse:Condition",
+  name: "condition",
+  label: "Condition",
+  description: "Condition as FEEL-Expression",
+  applicableElements: [ElementType.SequenceFlow],
+}

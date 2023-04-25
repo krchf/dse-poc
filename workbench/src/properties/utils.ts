@@ -7,6 +7,7 @@ export enum ElementType {
   DataInputAssociation = "bpmn:DataInputAssociation",
   DataOutputAssociation = "bpmn:DataOutputAssociation",
   DataObject = "bpmn:DataObjectReference",
+  SequenceFlow = "bpmn:SequenceFlow",
 }
 
 export interface Property {

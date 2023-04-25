@@ -16,11 +16,13 @@ import { supabase } from "./supabase-client"
 import ServicePropertyProviderModule from "./properties/service"
 import InputPropertyProviderModule from "./properties/target"
 import SourcePropertyProviderModule from "./properties/source"
+import ConditionPropertyProviderModule from "./properties/condition"
 import { generateDescriptors } from "./properties/utils"
 import {
   ServiceProperty,
   TargetProperty,
   SourceProperty,
+  ConditionProperty,
 } from "./properties/property-definitions"
 
 const id = new URLSearchParams(window.location.search).get("id")
@@ -29,6 +31,7 @@ const moddleDescriptors = generateDescriptors([
   ServiceProperty,
   TargetProperty,
   SourceProperty,
+  ConditionProperty,
 ])
 
 let modeler = new BpmnJS({
@@ -43,6 +46,7 @@ let modeler = new BpmnJS({
     ServicePropertyProviderModule,
     InputPropertyProviderModule,
     SourcePropertyProviderModule,
+    ConditionPropertyProviderModule,
   ],
   moddleExtensions: {
     dse: moddleDescriptors,
