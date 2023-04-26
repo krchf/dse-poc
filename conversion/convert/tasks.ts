@@ -1,29 +1,5 @@
 import { BPMN, DSE, ZEEBE } from "../enums"
 
-// interface XmlTask {
-//   $: any
-//   [BPMN.ExtensionElements]?: [
-//     {
-//       [DSE.Service]: [string]
-//       [ZEEBE.TaskDefinition]?: [
-//         {
-//           $: {
-//             type: "io.camunda:http-json:1"
-//           }
-//         }
-//       ]
-//       [ZEEBE.IoMapping]?: [
-//         {
-//           $: {
-//             source: string
-//             target: string
-//           }
-//         }
-//       ]
-//     }
-//   ]
-// }
-
 export type Service = any // TODO
 
 export function convertTask(task: any, services: { [id: string]: Service }) {
@@ -49,13 +25,17 @@ export function convertTask(task: any, services: { [id: string]: Service }) {
           // TODO obtain URL from service
           {
             $: {
-              source: "https://catfact.ninja/facts",
+              source: "https://postman-echo.com/post",
               target: "url",
             },
           },
           // TODO increase connection timeout
           {
             $: { source: "20", target: "connectionTimeoutInSeconds" },
+          },
+          // TODO set dynamically
+          {
+            $: { source: "={&#34;test&#34;: myVar}", target: "body" },
           },
         ],
       },
