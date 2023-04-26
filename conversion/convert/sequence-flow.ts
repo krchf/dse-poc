@@ -1,7 +1,7 @@
 import { BPMN, DSE } from "../enums"
 
-export interface XmlSequenceFlow {
-  $: any
+interface XmlSequenceFlow {
+  // $: any
   [BPMN.ExtensionElements]?: [
     {
       [DSE.Condition]: [string]
