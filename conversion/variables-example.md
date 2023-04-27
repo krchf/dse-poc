@@ -1,8 +1,8 @@
-# Global Inputs
+# Global Data
 
 ```json
 {
-  "globalInputs": {
+  "processInputs": {
     "singleInput": {
       "@url": "...1",
       "someAttribute": 123
@@ -39,7 +39,7 @@
 
 ```json
 {
-  "firstInputMethodData": globalInputs.singleInput,
+  "firstInputMethodData": processInputs.singleInput,
   "secondInputMethodData": firstActivity.firstOutput
 }
 ```
@@ -56,12 +56,11 @@
 
 # Sub-Processes (Multi-Instance)
 
-> TODO globalInputs -> processInputs
-
 > TODO multi-input (ex. topology + -> aggregate first?! /// NO: only one collection, rest is coming from parent process
 
-- Input Collection: `globalInputs.collectionInput`
+- Input Collection: `processInputs.collectionInput`
 - Input Element: `collectionItem` _(static)_
+  > TODO infer from model?
 - Output Collection: `firstSubProcess`
 - Output Element: `someSubProcessActivity`
 
