@@ -18,6 +18,13 @@ export default `<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-in
 <bpmn:sourceRef>DataObjectReference_0sl9h8b</bpmn:sourceRef>
 <bpmn:targetRef>Property_19f66xs</bpmn:targetRef>
 </bpmn:dataInputAssociation>
+<bpmn:dataInputAssociation id="DataInputAssociation_1np6zws">
+<bpmn:extensionElements>
+<dse:target>def</dse:target>
+</bpmn:extensionElements>
+<bpmn:sourceRef>DataObjectReference_1njt25k</bpmn:sourceRef>
+<bpmn:targetRef>Property_19f66xs</bpmn:targetRef>
+</bpmn:dataInputAssociation>
 <bpmn:dataOutputAssociation id="DataOutputAssociation_0ncv2c6">
 <bpmn:extensionElements>
 <dse:source>data</dse:source>
@@ -56,7 +63,17 @@ export default `<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-in
 </bpmn:extensionElements>
 <bpmn:targetRef>DataObjectReference_1qpjokv</bpmn:targetRef>
 </bpmn:dataOutputAssociation>
+<bpmn:dataOutputAssociation id="DataOutputAssociation_0ari4al">
+<bpmn:extensionElements>
+<dse:source>data</dse:source>
+</bpmn:extensionElements>
+<bpmn:targetRef>DataObjectReference_1ed3njl</bpmn:targetRef>
+</bpmn:dataOutputAssociation>
 </bpmn:serviceTask>
+<bpmn:dataObjectReference id="DataObjectReference_1njt25k" name="anotherInput" dataObjectRef="DataObject_0nkmfzh"/>
+<bpmn:dataObject id="DataObject_0nkmfzh"/>
+<bpmn:dataObjectReference id="DataObjectReference_1ed3njl" name="moreOutput" dataObjectRef="DataObject_1wi0u7l"/>
+<bpmn:dataObject id="DataObject_1wi0u7l"/>
 </bpmn:process>
 <bpmndi:BPMNDiagram id="BPMNDiagram_1">
 <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -91,6 +108,18 @@ export default `<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-in
 <bpmndi:BPMNShape id="Activity_1ax1pxr_di" bpmnElement="Activity_12s00ir">
 <dc:Bounds x="420" y="80" width="100" height="80"/>
 </bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="DataObjectReference_1njt25k_di" bpmnElement="DataObjectReference_1njt25k">
+<dc:Bounds x="192" y="175" width="36" height="50"/>
+<bpmndi:BPMNLabel>
+<dc:Bounds x="179" y="232" width="62" height="14"/>
+</bpmndi:BPMNLabel>
+</bpmndi:BPMNShape>
+<bpmndi:BPMNShape id="DataObjectReference_1ed3njl_di" bpmnElement="DataObjectReference_1ed3njl">
+<dc:Bounds x="532" y="185" width="36" height="50"/>
+<bpmndi:BPMNLabel>
+<dc:Bounds x="521" y="242" width="59" height="14"/>
+</bpmndi:BPMNLabel>
+</bpmndi:BPMNShape>
 <bpmndi:BPMNEdge id="Flow_1y0gu8r_di" bpmnElement="Flow_1y0gu8r">
 <di:waypoint x="209" y="120"/>
 <di:waypoint x="260" y="120"/>
@@ -122,6 +151,16 @@ export default `<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-in
 <di:waypoint x="480" y="80"/>
 <di:waypoint x="480" y="25"/>
 <di:waypoint x="532" y="25"/>
+</bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="DataInputAssociation_1np6zws_di" bpmnElement="DataInputAssociation_1np6zws">
+<di:waypoint x="228" y="200"/>
+<di:waypoint x="310" y="200"/>
+<di:waypoint x="310" y="160"/>
+</bpmndi:BPMNEdge>
+<bpmndi:BPMNEdge id="DataOutputAssociation_0ari4al_di" bpmnElement="DataOutputAssociation_0ari4al">
+<di:waypoint x="470" y="160"/>
+<di:waypoint x="470" y="220"/>
+<di:waypoint x="532" y="220"/>
 </bpmndi:BPMNEdge>
 </bpmndi:BPMNPlane>
 </bpmndi:BPMNDiagram>
