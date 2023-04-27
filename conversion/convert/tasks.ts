@@ -12,13 +12,44 @@ function getResponseVarName(task: any) {
   return name
 }
 
-function getProcessVarName(task: any, dataObjectReferences: any[]) {
+function getRequestVarName(task: any) {
   // TODO handle no output
-  const dataObjRefId = task[BPMN.DataOutputAssociation][0][BPMN.TargetRef][0]
+  const name =
+    task[BPMN.DataInputAssociation][0][BPMN.ExtensionElements][0][DSE.Target]
+  delete task[BPMN.DataOutputAssociation][0][BPMN.ExtensionElements]
+  return name
+}
+
+function getProcessVarName(
+  task: any,
+  dataObjectReferences: any[],
+  target: boolean
+) {
+  // TODO handle no output
+  const associationType = target
+    ? BPMN.DataOutputAssociation
+    : BPMN.DataInputAssociation
+  const refType = target ? BPMN.TargetRef : BPMN.SourceRef
+
+  const associations = task[associationType]
+  if (!associations) {
+    return null
+  }
+
+  const dataObjRefId = associations[0][refType][0]
   const dataObjRef = dataObjectReferences.find(
     (dor) => dor.$.id === dataObjRefId
   )
+
   return dataObjRef.$.name
+}
+
+function getOutputProcessVarName(task, dataObjectReferences) {
+  return getProcessVarName(task, dataObjectReferences, true)
+}
+
+function getInputProcessVarName(task, dataObjectReferences) {
+  return getProcessVarName(task, dataObjectReferences, false)
 }
 
 export function convertTask(
@@ -35,7 +66,13 @@ export function convertTask(
   delete task[BPMN.ExtensionElements][0][DSE.Service]
 
   const responseVarName = getResponseVarName(task)
-  const processVarName = getProcessVarName(task, dataObjectReferences)
+  const outputProcessVarName = getOutputProcessVarName(
+    task,
+    dataObjectReferences
+  )
+
+  const requestVarName = getRequestVarName(task)
+  const inputProcessVarName = getInputProcessVarName(task, dataObjectReferences)
 
   task[BPMN.ExtensionElements] = {
     "zeebe:taskDefinition": [
@@ -59,9 +96,11 @@ export function convertTask(
           {
             $: { source: "20", target: "connectionTimeoutInSeconds" },
           },
-          // TODO set dynamically
           {
-            $: { source: `={"test": myVar}`, target: "body" },
+            $: {
+              source: `={"${requestVarName}": ${inputProcessVarName}}`,
+              target: "body",
+            },
           },
         ],
       },
@@ -73,7 +112,7 @@ export function convertTask(
           {
             $: {
               key: "resultExpression",
-              value: `={"${processVarName}" : body.${responseVarName}}`,
+              value: `={"${outputProcessVarName}" : body.${responseVarName}}`,
             },
           },
           // { $: { key: "errorExpression" } },

@@ -10,6 +10,7 @@ export enum BPMN {
   DataOutputAssociation = "bpmn:dataOutputAssociation",
   DataInputAssociation = "bpmn:dataInputAssociation",
   TargetRef = "bpmn:targetRef",
+  SourceRef = "bpmn:sourceRef",
   DataObjectReference = "bpmn:dataObjectReference",
 }
 
