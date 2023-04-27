@@ -6,6 +6,15 @@ import { useService } from "bpmn-js-properties-panel"
 
 import { Property, getExtensionElement } from "../utils"
 
+function escapeString(str: String) {
+  return str
+    .replaceAll(/&\s/g, "&amp;")
+    .replaceAll(/</g, "&lt;")
+    .replaceAll(/>/g, "&gt;")
+    .replaceAll(/'/g, "&apos;")
+    .replaceAll(/"/g, "&quot;")
+}
+
 export function createEntry(element: Element, property: Property) {
   return {
     id: property.type,
@@ -38,7 +47,7 @@ export function createEntry(element: Element, property: Property) {
           extensionElements.get("values").push(ext)
         }
 
-        ext[property.name] = value
+        ext[property.name] = escapeString(value)
 
         return modeling.updateProperties(element, {
           extensionElements,

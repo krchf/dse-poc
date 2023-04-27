@@ -1,5 +1,5 @@
 import xml2js from "xml2js"
-import example from "./examples/2"
+import example from "./examples/2-gateway"
 import { convertSequenceFlow } from "./convert/sequence-flow"
 import { BPMN } from "./enums"
 import { convertServiceTask } from "./convert/service-tasks"
