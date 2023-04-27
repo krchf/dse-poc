@@ -1,42 +1,21 @@
 import { BPMN, DSE, ZEEBE } from "../enums"
 
-// TODO convert data input/output associations to variable assignments
-
 export type Service = any // TODO
 
-function getResponseVarName(task: any) {
-  // TODO handle no output
-  const name =
-    task[BPMN.DataOutputAssociation][0][BPMN.ExtensionElements][0][DSE.Source]
-  delete task[BPMN.DataOutputAssociation][0][BPMN.ExtensionElements]
-  return name
+function getResponseVarName(association: any) {
+  return association[BPMN.ExtensionElements][0][DSE.Source]
 }
 
-function getRequestVarName(task: any) {
-  // TODO handle no output
-  const name =
-    task[BPMN.DataInputAssociation][0][BPMN.ExtensionElements][0][DSE.Target]
-  delete task[BPMN.DataOutputAssociation][0][BPMN.ExtensionElements]
-  return name
+function getRequestVarName(association: any) {
+  return association[BPMN.ExtensionElements][0][DSE.Target]
 }
 
 function getProcessVarName(
-  task: any,
+  association: any,
   dataObjectReferences: any[],
-  target: boolean
+  ref: BPMN.TargetRef | BPMN.SourceRef
 ) {
-  // TODO handle no output
-  const associationType = target
-    ? BPMN.DataOutputAssociation
-    : BPMN.DataInputAssociation
-  const refType = target ? BPMN.TargetRef : BPMN.SourceRef
-
-  const associations = task[associationType]
-  if (!associations) {
-    return null
-  }
-
-  const dataObjRefId = associations[0][refType][0]
+  const dataObjRefId = association[ref][0]
   const dataObjRef = dataObjectReferences.find(
     (dor) => dor.$.id === dataObjRefId
   )
@@ -44,12 +23,48 @@ function getProcessVarName(
   return dataObjRef.$.name
 }
 
-function getOutputProcessVarName(task, dataObjectReferences) {
-  return getProcessVarName(task, dataObjectReferences, true)
+function getOutputProcessVarName(association: any, dataObjectReferences: any) {
+  return getProcessVarName(association, dataObjectReferences, BPMN.TargetRef)
 }
 
-function getInputProcessVarName(task, dataObjectReferences) {
-  return getProcessVarName(task, dataObjectReferences, false)
+function getInputProcessVarName(association: any, dataObjectReferences: any) {
+  return getProcessVarName(association, dataObjectReferences, BPMN.SourceRef)
+}
+
+function createResponseMapping(
+  associations: any[],
+  dataObjectReferences: any[]
+) {
+  if (associations === null || associations === undefined) return "{}"
+
+  const mappings: string[][] = []
+
+  for (const association of associations) {
+    mappings.push([
+      getOutputProcessVarName(association, dataObjectReferences),
+      getResponseVarName(association),
+    ])
+  }
+
+  return "={" + mappings.map(([p, r]) => `"${p}": body.${r}`).join(",") + "}"
+}
+
+function createRequestMapping(
+  associations: any[],
+  dataObjectReferences: any[]
+) {
+  if (associations === null || associations === undefined) return "{}"
+
+  const mappings: string[][] = []
+
+  for (const association of associations) {
+    mappings.push([
+      getRequestVarName(association),
+      getInputProcessVarName(association, dataObjectReferences),
+    ])
+  }
+
+  return "={" + mappings.map(([r, p]) => `"${r}": ${p}`).join(",") + "}"
 }
 
 export function convertTask(
@@ -65,14 +80,17 @@ export function convertTask(
   const serviceId = task[BPMN.ExtensionElements][0][DSE.Service]
   delete task[BPMN.ExtensionElements][0][DSE.Service]
 
-  const responseVarName = getResponseVarName(task)
-  const outputProcessVarName = getOutputProcessVarName(
-    task,
+  const requestMapping = createRequestMapping(
+    task[BPMN.DataInputAssociation],
     dataObjectReferences
   )
+  // delete task[BPMN.DataInputAssociation]
 
-  const requestVarName = getRequestVarName(task)
-  const inputProcessVarName = getInputProcessVarName(task, dataObjectReferences)
+  const responseMapping = createResponseMapping(
+    task[BPMN.DataOutputAssociation],
+    dataObjectReferences
+  )
+  // delete task[BPMN.DataOutputAssociation]
 
   task[BPMN.ExtensionElements] = {
     "zeebe:taskDefinition": [
@@ -98,7 +116,7 @@ export function convertTask(
           },
           {
             $: {
-              source: `={"${requestVarName}": ${inputProcessVarName}}`,
+              source: requestMapping,
               target: "body",
             },
           },
@@ -107,12 +125,11 @@ export function convertTask(
     ],
     "zeebe:taskHeaders": [
       {
-        // TODO set values below dynamically
         "zeebe:header": [
           {
             $: {
               key: "resultExpression",
-              value: `={"${outputProcessVarName}" : body.${responseVarName}}`,
+              value: responseMapping,
             },
           },
           // { $: { key: "errorExpression" } },
