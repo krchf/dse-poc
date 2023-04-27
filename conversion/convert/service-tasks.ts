@@ -1,6 +1,9 @@
-import { BPMN, DSE, ZEEBE } from "../enums"
+import { BPMN, DSE } from "../enums"
 
-export type Service = any // TODO
+export interface ServiceInterface {
+  location: string
+  // type: "automated" | "interactive"
+}
 
 function getResponseVarName(association: any) {
   return association[BPMN.ExtensionElements][0][DSE.Source]
@@ -35,7 +38,7 @@ function createResponseMapping(
   associations: any[],
   dataObjectReferences: any[]
 ) {
-  if (associations === null || associations === undefined) return "{}"
+  if (associations === null || associations === undefined) return "={}"
 
   const mappings: string[][] = []
 
@@ -53,7 +56,7 @@ function createRequestMapping(
   associations: any[],
   dataObjectReferences: any[]
 ) {
-  if (associations === null || associations === undefined) return "{}"
+  if (associations === null || associations === undefined) return "={}"
 
   const mappings: string[][] = []
 
@@ -67,10 +70,10 @@ function createRequestMapping(
   return "={" + mappings.map(([r, p]) => `"${r}": ${p}`).join(",") + "}"
 }
 
-export function convertTask(
+export function convertServiceTask(
   task: any,
   dataObjectReferences: any,
-  services: { [id: string]: Service }
+  services: { [id: string]: ServiceInterface }
 ) {
   task.$ = {
     ...task.$,
@@ -103,10 +106,9 @@ export function convertTask(
         "zeebe:input": [
           { $: { source: "noAuth", target: "authentication.type" } },
           { $: { source: "post", target: "method" } },
-          // TODO obtain URL from service
           {
             $: {
-              source: "https://postman-echo.com/post",
+              source: services[serviceId].location,
               target: "url",
             },
           },
