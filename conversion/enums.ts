@@ -6,11 +6,18 @@ export enum BPMN {
   ExtensionElements = "bpmn:extensionElements",
   ConditionExpression = "bpmn:conditionExpression",
   ServiceTask = "bpmn:serviceTask",
+  Task = "bpmn:task",
+  DataOutputAssociation = "bpmn:dataOutputAssociation",
+  DataInputAssociation = "bpmn:dataInputAssociation",
+  TargetRef = "bpmn:targetRef",
+  DataObjectReference = "bpmn:dataObjectReference",
 }
 
 export enum DSE {
   Condition = "dse:condition",
   Service = "dse:service",
+  Source = "dse:source",
+  Target = "dse:target",
 }
 
 export enum ZEEBE {

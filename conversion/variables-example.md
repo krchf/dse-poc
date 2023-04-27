@@ -2,34 +2,28 @@
 
 ```json
 {
-  "processInputs": {
-    "singleInput": {
-      "@url": "...1",
-      "someAttribute": 123
-    },
-    "collectionInput": [
-      {
-        "@url": "...2",
-        "someAttribute": 234
-      },
-      {
-        "@url": "...3",
-        "someAttribute": 345
-      }
-    ]
+  "singleInput": {
+    "@url": "...1",
+    "someAttribute": 123
   },
-  "firstActivityId": {
-    "firstOutput": {
-      "@url": "...4",
-      "anotherAttribute": "abc"
+  "collectionInput": [
+    {
+      "@url": "...2",
+      "someAttribute": 234
     },
-    "secondOutput": [
-      // ... (collection)
-    ]
+    {
+      "@url": "...3",
+      "someAttribute": 345
+    }
+  ],
+  "firstOutput": {
+    "@url": "...4",
+    "anotherAttribute": "abc"
   },
-  "secondActivityId": {
-    // ...
-  }
+  "secondOutput": [
+    // ... (collection)
+  ]
+  // ...
 }
 ```
 

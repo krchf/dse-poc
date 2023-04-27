@@ -9,7 +9,11 @@ async function convertToCamunda() {
   convertSequenceFlow(
     json[BPMN.Definitions][BPMN.Process][0][BPMN.SequenceFlow][3]
   )
-  convertTask(json[BPMN.Definitions][BPMN.Process][0][BPMN.ServiceTask][0], {})
+  convertTask(
+    json[BPMN.Definitions][BPMN.Process][0][BPMN.Task][0],
+    json[BPMN.Definitions][BPMN.Process][0][BPMN.DataObjectReference],
+    {}
+  )
   const xml = new xml2js.Builder().buildObject(json)
   console.log(xml)
 }

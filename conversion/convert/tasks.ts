@@ -4,7 +4,28 @@ import { BPMN, DSE, ZEEBE } from "../enums"
 
 export type Service = any // TODO
 
-export function convertTask(task: any, services: { [id: string]: Service }) {
+function getResponseVarName(task: any) {
+  // TODO handle no output
+  const name =
+    task[BPMN.DataOutputAssociation][0][BPMN.ExtensionElements][0][DSE.Source]
+  delete task[BPMN.DataOutputAssociation][0][BPMN.ExtensionElements]
+  return name
+}
+
+function getProcessVarName(task: any, dataObjectReferences: any[]) {
+  // TODO handle no output
+  const dataObjRefId = task[BPMN.DataOutputAssociation][0][BPMN.TargetRef][0]
+  const dataObjRef = dataObjectReferences.find(
+    (dor) => dor.$.id === dataObjRefId
+  )
+  return dataObjRef.$.name
+}
+
+export function convertTask(
+  task: any,
+  dataObjectReferences: any,
+  services: { [id: string]: Service }
+) {
   task.$ = {
     ...task.$,
     "zeebe:modelerTemplate": "io.camunda.connectors.HttpJson.v2",
@@ -12,6 +33,9 @@ export function convertTask(task: any, services: { [id: string]: Service }) {
   }
   const serviceId = task[BPMN.ExtensionElements][0][DSE.Service]
   delete task[BPMN.ExtensionElements][0][DSE.Service]
+
+  const responseVarName = getResponseVarName(task)
+  const processVarName = getProcessVarName(task, dataObjectReferences)
 
   task[BPMN.ExtensionElements] = {
     "zeebe:taskDefinition": [
@@ -37,7 +61,7 @@ export function convertTask(task: any, services: { [id: string]: Service }) {
           },
           // TODO set dynamically
           {
-            $: { source: "={&#34;test&#34;: myVar}", target: "body" },
+            $: { source: `={"test": myVar}`, target: "body" },
           },
         ],
       },
@@ -46,14 +70,13 @@ export function convertTask(task: any, services: { [id: string]: Service }) {
       {
         // TODO set values below dynamically
         "zeebe:header": [
-          { $: { key: "resultVariable", value: "apiResponse" } },
           {
             $: {
               key: "resultExpression",
-              value: '={"body" : body}',
+              value: `={"${processVarName}" : body.${responseVarName}}`,
             },
           },
-          { $: { key: "errorExpression" } },
+          // { $: { key: "errorExpression" } },
         ],
       },
     ],
