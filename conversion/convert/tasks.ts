@@ -1,5 +1,7 @@
 import { BPMN, DSE, ZEEBE } from "../enums"
 
+// TODO convert data input/output associations to variable assignments
+
 export type Service = any // TODO
 
 export function convertTask(task: any, services: { [id: string]: Service }) {
