@@ -10,8 +10,26 @@
     <div id="workbench">
       <div id="canvas"></div>
       <div id="properties"></div>
+      <button id="saveBtn">Save</button>
     </div>
-    <button id="saveBtn">Save</button>
+    <div id="assistance">
+      <table>
+        <thead>
+          <th class="type"></th>
+          <th class="message">Assistance Feedback (1 Error, 1 Warning)</th>
+        </thead>
+        <tbody>
+          <tr class="error">
+            <td>Error</td>
+            <td>Abc</td>
+          </tr>
+          <tr class="warning">
+            <td>Warning</td>
+            <td>Def</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
