@@ -62,7 +62,7 @@ td {
 
 #saveBtn {
   position: fixed;
-  bottom: 7em;
+  /* bottom: 7em; */
+  bottom: 1em;
   left: 1.5em;
-  /* bottom: 1em; */
 }
