@@ -1,0 +1,24 @@
+POST http://localhost:5000/api/compositions/
+content-type: application/json
+
+{
+  "name": "Test Model"
+}
+
+###
+
+GET http://localhost:5000/api/compositions/
+
+###
+
+GET http://localhost:5000/api/compositions/1
+
+###
+
+PUT http://localhost:5000/api/compositions/1
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "Updated Model"
+}

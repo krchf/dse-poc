@@ -1,0 +1,12 @@
+@taskId = 2251799813691709
+
+POST http://localhost:8082/v1/tasks/search
+
+###
+
+GET http://localhost:8082/v1/tasks/{{taskId}}
+
+###
+
+POST http://localhost:8082/v1/tasks/{{taskId}}/variables/search
+

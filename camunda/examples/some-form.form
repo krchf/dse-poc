@@ -1,0 +1,22 @@
+{
+  "components": [
+    {
+      "label": "My Text",
+      "type": "textfield",
+      "id": "Field_09107wr",
+      "key": "firstInput",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default",
+  "id": "Form_1hclfl9",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.1.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.9.0"
+  },
+  "schemaVersion": 7
+}
