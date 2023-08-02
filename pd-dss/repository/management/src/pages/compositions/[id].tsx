@@ -1,6 +1,6 @@
 import Head from "next/head"
 import { useQuery } from "@tanstack/react-query"
-import { Composition } from "../../../../shared/types/composition"
+import { Composition } from "../../types/composition"
 import { useRouter } from "next/router"
 import Link from "next/link"
 

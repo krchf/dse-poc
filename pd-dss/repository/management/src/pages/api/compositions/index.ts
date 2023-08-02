@@ -2,10 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { supabase } from "../supabase-client"
 
-import {
-  Composition,
-  CompositionCollection,
-} from "../../../../../shared/types/composition"
+import { Composition, CompositionCollection } from "../../../types/composition"
 
 // TODO error handling
 

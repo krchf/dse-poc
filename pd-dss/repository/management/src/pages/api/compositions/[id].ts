@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
 
-import { Composition } from "../../../../../shared/types/composition"
+import { Composition } from "../../../types/composition"
 import { supabase } from "../supabase-client"
 
 // TODO error handling

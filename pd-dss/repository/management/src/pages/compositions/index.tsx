@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { useQuery } from "@tanstack/react-query"
 
-import { CompositionCollection } from "../../../../shared/types/composition"
+import { CompositionCollection } from "../../types/composition"
 
 import styles from "@/styles/Home.module.css"
 import Link from "next/link"
